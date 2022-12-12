@@ -29,6 +29,8 @@ export interface UseTimerState {
   timeRemaining: string;
   /** The time remaining as seconds. */
   secondsRemaining: number;
+  /** Whether the timer is frozen. */
+  isFrozen: boolean;
 
   /** Whether the timer should count down. */
   setFreeze(value: boolean): void;
@@ -87,6 +89,7 @@ export function useTimer(
   return {
     timeRemaining,
     secondsRemaining,
+    isFrozen: freeze,
     setFreeze,
     resetTimer,
   } as UseTimerState;
