@@ -55,7 +55,7 @@ export function useTimer(
 ): UseTimerState {
   const [secondsRemaining, setSecondsRemaining] =
     React.useState(initialSeconds);
-  const [timeRemaining, setTimeRemaining] = React.useState('');
+  const [timeRemaining, setTimeRemaining] = React.useState(getTimeString(initialSeconds));
   const [freeze, setFreeze] = React.useState(initialFreeze);
 
   React.useEffect(() => setSecondsRemaining(initialSeconds), [initialSeconds]);
@@ -65,7 +65,7 @@ export function useTimer(
     if (secondsRemaining > 0 && !freeze) {
       const timeout = setTimeout(() => {
         const hydrated = secondsRemaining - 1;
-        setTimeRemaining(calculateTimeRemaining(hydrated));
+        setTimeRemaining(getTimeString(hydrated));
         setSecondsRemaining(hydrated);
       }, 1000); // 1 second.
       return () => clearTimeout(timeout);
@@ -80,7 +80,7 @@ export function useTimer(
   const resetTimer = React.useCallback(
     (freeze: boolean = false) => {
       setSecondsRemaining(initialSeconds);
-      setTimeRemaining(calculateTimeRemaining(initialSeconds));
+      setTimeRemaining(getTimeString(initialSeconds));
       setFreeze(freeze);
     },
     [initialSeconds]
@@ -102,7 +102,8 @@ export function useTimer(
  *
  * @param secondsRemaining - The number of seconds remaining.
  */
-function calculateTimeRemaining(secondsRemaining: number) {
+function getTimeString(secondsRemaining: number) {
+  if(secondsRemaining == 0) return '00:00';
   if (secondsRemaining < 60) return secondsRemaining.toString();
   else {
     const seconds = secondsRemaining % 60;
