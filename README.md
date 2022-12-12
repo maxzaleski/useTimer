@@ -1,6 +1,6 @@
 # use-timer
 
-React hook which returns a timer's remaining span as a formatted time string, e.g. 65 -> "1:05", as well as numerically.
+React hook that returns a timer's remaining span as a formatted time string, e.g. 65 -> "1:05", as well as numerically.
 
 ## Table of Contents
 
