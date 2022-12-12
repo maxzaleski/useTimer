@@ -1,5 +1,5 @@
 {
-  "name": "@mz/use-timer",
+  "name": "@mzaleski/use-timer",
   "version": "1.0.0",
   "description": "React hook that returns a timer's remaining span as a formatted time string, e.g. 65 -> '1:05', as well as numerically.",
   "main": "dist/index.js",
@@ -7,7 +7,9 @@
   "scripts": {
     "test": "jest",
     "build": "tsc",
-    "publish": "./node_modules/.bin/prettier --write 'src/**/*.{ts,tsx}' && yarn build && npm publish && rm -rf dist"
+    "prettier": "./node_modules/.bin/prettier --write 'src/**/*.{ts,tsx}'",
+    "prepublish": "yarn run prettier && yarn build",
+    "publish": "yarn run prepublish && npm publish --access public && rm -rf dist"
   },
   "repository": {
     "type": "git",

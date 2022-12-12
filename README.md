@@ -20,17 +20,17 @@ React hook that returns a timer's remaining span as a formatted time string, e.g
 Install through your package manager of choice (npm, yarn, etc.)
 
 ```
-npm -i @mz/use-timer
+npm -i @mzaleski/use-timer
 ```
 
 ```
-yarn add @mz/use-timer
+yarn add @mzaleski/use-timer
 ```
 
 ## Usage
 
 ```jsx
-import { useTimer } from '@mz/use-timer';
+import { useTimer } from '@mzaleski/use-timer';
 
 function Component(props) {
   const { timeRemaining, secondsRemaining, setFreeze, resetTimer } = useTimer(65, false,                               
