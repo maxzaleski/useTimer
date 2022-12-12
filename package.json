@@ -7,9 +7,9 @@
   "scripts": {
     "test": "jest",
     "build": "tsc",
-    "prettier": "./node_modules/.bin/prettier --write 'src/**/*.{ts,tsx}'",
-    "prepublish": "yarn run prettier && yarn build",
-    "publish": "yarn run prepublish && npm publish --access public && rm -rf dist"
+    "prepublish": "./node_modules/.bin/prettier --write 'src/**/*.{ts,tsx}' && yarn build",
+    "publish": "yarn prepublish && npm publish --access public",
+    "clean": "rm -rf dist"
   },
   "repository": {
     "type": "git",
