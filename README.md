@@ -33,7 +33,7 @@ yarn add @mz/use-timer
 import { useTimer } from '@mz/use-timer';
 
 function Component(props) {
-  const { timeRemaining, secondsRemaining, setFreeze, resetTimer } = useTimer(3500, false,                               
+  const { timeRemaining, secondsRemaining, setFreeze, resetTimer } = useTimer(65, false,                               
     () => console.log('Timer finished!') 
   );
 
@@ -53,11 +53,11 @@ function Component(props) {
 
 | Name               | Description                                                                                                                 |
 | ------------------ | --------------------------------------------------------------------------------------------------------------------------- |
-| `timeRemaining`    | The time remaining as a formatted string e.g., "3:15"                                                                       |
+| `timeRemaining`    | The time remaining as a formatted string, e.g. "1:05"                                                                       |
 | `secondsRemaining` | The time remaining as seconds                                                                                               |
 | `isFrozen`         | Whether the timer is frozen                                                                                                 |
 | `setFreeze`        | A setter for the timer's freeze state                                                                                       |
-| `resetTimer`       | A function to force-reset the timer – takes the `freeze` parameter which dictates whether to start the timer upon reset. |
+| `resetTimer`       | A function to force-reset the timer – takes the `freeze` parameter which dictates whether to start the timer upon reset.    |
 
 ### Hook Options 
 
