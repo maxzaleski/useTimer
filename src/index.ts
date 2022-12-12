@@ -30,16 +30,19 @@ export interface UseTimerState {
   /** The time remaining as seconds. */
   secondsRemaining: number;
 
-  /** Whether the timer should count down. */ 
+  /** Whether the timer should count down. */
   setFreeze(value: boolean): void;
-  /** Force the timer to reset.  */
+  /**
+   * Force the timer to reset.
+   * @param freeze - Whether the timer should freeze after resetting.
+   */
   resetTimer(freeze?: boolean): void;
 }
 
 /**
  * useTimer is a hook that spawns a timer which ticks every second.
  *
- * @param initialSeconds - Initial (remaining) time in seconds. 
+ * @param initialSeconds - Initial (remaining) time in seconds.
  * @param initialFreeze - Initial freeze state; if true, the timer will not tick.
  * @param onCompleted - Hook called when timer completes.
  */
@@ -48,7 +51,8 @@ export function useTimer(
   initialFreeze: boolean,
   onCompleted?: () => void
 ): UseTimerState {
-  const [secondsRemaining, setSecondsRemaining] = React.useState(initialSeconds);
+  const [secondsRemaining, setSecondsRemaining] =
+    React.useState(initialSeconds);
   const [timeRemaining, setTimeRemaining] = React.useState('');
   const [freeze, setFreeze] = React.useState(initialFreeze);
 
@@ -63,19 +67,22 @@ export function useTimer(
         setSecondsRemaining(hydrated);
       }, 1000); // 1 second.
       return () => clearTimeout(timeout);
-    // Countdown has been reached -> reset timer. 
+      // Countdown has been reached -> reset timer.
     } else if (secondsRemaining === 0) {
       setFreeze(true);
-      // Call `onCompleted` hook if provided. 
+      // Call `onCompleted` hook if provided.
       if (onCompleted) onCompleted();
     }
   }, [freeze, initialSeconds, onCompleted, secondsRemaining]);
 
-  const resetTimer = React.useCallback((freeze: boolean = false) => {
-    setSecondsRemaining(initialSeconds);
-    setTimeRemaining(calculateTimeRemaining(initialSeconds));
-    setFreeze(freeze);
-  }, [initialSeconds])
+  const resetTimer = React.useCallback(
+    (freeze: boolean = false) => {
+      setSecondsRemaining(initialSeconds);
+      setTimeRemaining(calculateTimeRemaining(initialSeconds));
+      setFreeze(freeze);
+    },
+    [initialSeconds]
+  );
 
   return {
     timeRemaining,
@@ -97,6 +104,6 @@ function calculateTimeRemaining(secondsRemaining: number) {
   else {
     const seconds = secondsRemaining % 60;
     const minutes = (secondsRemaining - seconds) / 60;
-    return minutes + ":" + (seconds < 10 ? "0" + seconds : seconds);
+    return minutes + ':' + (seconds < 10 ? '0' + seconds : seconds);
   }
 }
