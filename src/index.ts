@@ -103,11 +103,10 @@ export function useTimer(
  * @param secondsRemaining - The number of seconds remaining.
  */
 function getTimeString(secondsRemaining: number) {
-  if(secondsRemaining == 0) return '00:00';
-  if (secondsRemaining < 60) return secondsRemaining.toString();
+  if (secondsRemaining == 0) return '00:00';
   else {
+    const minutes = Math.floor(secondsRemaining / 60);
     const seconds = secondsRemaining % 60;
-    const minutes = (secondsRemaining - seconds) / 60;
-    return minutes + ':' + (seconds < 10 ? '0' + seconds : seconds);
+    return `${minutes < 10 ? `0${minutes}` : minutes}:${seconds < 10 ? `0${seconds}` : seconds}`;
   }
 }

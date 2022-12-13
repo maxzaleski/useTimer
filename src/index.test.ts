@@ -7,20 +7,24 @@ describe('init', () => {
   it('should set `secondsRemaining`', () =>
     expect(result.current.secondsRemaining).toBe(10));
   it('should set `timeRemaining`', () =>
-    expect(result.current.timeRemaining).toBe('10'));
+    expect(result.current.timeRemaining).toBe('00:10'));
   it('should set `isFrozen`', () => expect(result.current.isFrozen).toBe(true));
 });
 
 describe('time string', () => {
-  it('should return seconds if <60', () => {
+  it('should return 00:xx seconds', () => {
     const { result } = renderHook(() => useTimer(10, true));
-    expect(result.current.timeRemaining).toBe('10');
+    expect(result.current.timeRemaining).toBe('00:10');
   });
-  it('should return minutes and seconds if >=60', () => {
+  it('should return xx:00 minutes and seconds', () => {
     const { result } = renderHook(() => useTimer(60, true));
-    expect(result.current.timeRemaining).toBe('1:00');
+    expect(result.current.timeRemaining).toBe('01:00');
   });
-  it('should return 00:00 if 0', () => {
+  it('should return xx:xx minutes and seconds', () => {
+    const { result } = renderHook(() => useTimer(65, true));
+    expect(result.current.timeRemaining).toBe('01:05');
+  });
+  it('should return 00:00', () => {
     const { result } = renderHook(() => useTimer(0, true));
     expect(result.current.timeRemaining).toBe('00:00');
   });
@@ -33,12 +37,12 @@ describe('timer', () => {
     );
 
     expect(result.current.secondsRemaining).toBe(60);
-    expect(result.current.timeRemaining).toBe('1:00');
+    expect(result.current.timeRemaining).toBe('01:00');
 
     await waitForValueToChange(() => result.current.secondsRemaining);
 
     expect(result.current.secondsRemaining).toBe(59);
-    expect(result.current.timeRemaining).toBe('59');
+    expect(result.current.timeRemaining).toBe('00:59');
   });
 
   it('should freeze when time is up', async () => {
