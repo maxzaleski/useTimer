@@ -20,7 +20,7 @@ describe('time string', () => {
     const { result } = renderHook(() => useTimer(60, true));
     expect(result.current.timeRemaining).toBe('1:00');
   });
-  it('should return 0 if 0:00', () => {
+  it('should return 00:00 if 0', () => {
     const { result } = renderHook(() => useTimer(0, true));
     expect(result.current.timeRemaining).toBe('00:00');
   });
