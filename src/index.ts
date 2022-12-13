@@ -58,8 +58,6 @@ export function useTimer(
   const [timeRemaining, setTimeRemaining] = React.useState(getTimeString(initialSeconds));
   const [freeze, setFreeze] = React.useState(initialFreeze);
 
-  React.useEffect(() => setSecondsRemaining(initialSeconds), [initialSeconds]);
-
   React.useEffect(() => {
     // Make the timer tick every second.
     if (secondsRemaining > 0 && !freeze) {
@@ -70,12 +68,12 @@ export function useTimer(
       }, 1000); // 1 second.
       return () => clearTimeout(timeout);
       // Countdown has been reached -> reset timer.
-    } else if (secondsRemaining === 0) {
+    } else if (secondsRemaining === 0 && !freeze) {
       setFreeze(true);
       // Call `onCompleted` hook if provided.
       if (onCompleted) onCompleted();
     }
-  }, [freeze, initialSeconds, onCompleted, secondsRemaining]);
+  }, [freeze, secondsRemaining]);
 
   const resetTimer = React.useCallback(
     (freeze: boolean = false) => {

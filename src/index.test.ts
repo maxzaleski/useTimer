@@ -33,16 +33,13 @@ describe('time string', () => {
 describe('timer', () => {
   it('should tick down every second', async () => {
     const { result, waitForValueToChange } = renderHook(() =>
-      useTimer(60, false)
+      useTimer(3, false)
     );
-
-    expect(result.current.secondsRemaining).toBe(60);
-    expect(result.current.timeRemaining).toBe('01:00');
-
-    await waitForValueToChange(() => result.current.secondsRemaining);
-
-    expect(result.current.secondsRemaining).toBe(59);
-    expect(result.current.timeRemaining).toBe('00:59');
+    for (let i = 3; i > 0; i--) {
+      expect(result.current.secondsRemaining).toBe(i);
+      expect(result.current.timeRemaining).toBe(`00:${i < 10 ? `0${i}` : i}`);
+      await waitForValueToChange(() => result.current.secondsRemaining);
+    }
   });
 
   it('should freeze when time is up', async () => {
@@ -56,14 +53,14 @@ describe('timer', () => {
   });
 
   it('should call `onCompleted` when time is up', async () => {
-    const onCompleted = jest.fn();
+    const fn = jest.fn();
     const { result, waitForValueToChange } = renderHook(() =>
-      useTimer(1, false, onCompleted)
+      useTimer(1, false, fn)
     );
-    expect(onCompleted).not.toHaveBeenCalled();
+    expect(fn).not.toHaveBeenCalled();
 
     await waitForValueToChange(() => result.current.secondsRemaining);
-    expect(onCompleted).toHaveBeenCalled();
+    expect(fn).toHaveBeenCalledTimes(1);
   })
 
   it('should reset', async () => {
