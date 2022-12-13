@@ -61,7 +61,7 @@ describe('timer', () => {
 
     await waitForValueToChange(() => result.current.secondsRemaining);
     expect(fn).toHaveBeenCalledTimes(1);
-  })
+  });
 
   it('should reset', async () => {
     const { result, waitForValueToChange } = renderHook(() =>
