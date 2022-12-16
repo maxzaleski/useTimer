@@ -6,16 +6,16 @@ React hook that returns a timer's remaining span as a formatted time string, e.g
 
 - [use-timer](#use-timer)
   - [Table of Contents](#table-of-contents)
-  - [Getting Started](#getting-started)
+  - [Installation](#installation)
   - [Usage](#usage)
-    - [Hook Returned Properties](#hook-returned-properties)
-    - [Hook Options](#hook-options)
+    - [Configuration](#configuration)
+    - [Properties](#properties)
   - [TypeScript Support](#typescript-support)
   - [License](#license)
 
 ---
 
-## Getting Started 
+## Installation 
 
 Install through your package manager of choice (npm, yarn, etc.)
 
@@ -49,23 +49,27 @@ function Component(props) {
 }
 ```
 
-### Hook Returned Properties
+### Configuration
 
-| Name               | Description                                                                                                                 |
-| ------------------ | --------------------------------------------------------------------------------------------------------------------------- |
-| `timeRemaining`    | The time remaining as a formatted string, e.g. "01:05"                                                                       |
-| `secondsRemaining` | The time remaining as seconds                                                                                               |
-| `isFrozen`         | Whether the timer is frozen                                                                                                 |
-| `setFreeze`        | A setter for the timer's freeze state                                                                                       |
-| `resetTimer`       | A function to force-reset the timer – takes the `freeze` parameter which dictates whether to start the timer upon reset.    |
+The hook's configuration options are as follows:
 
-### Hook Options 
+| Name             | Type     | Description                                |
+| ---------------- | -------- | ------------------------------------------ |
+| `initialSeconds` | Number   | Initial (remaining) time in seconds        |
+| `initialFreeze`  | Boolean  | Initial freeze state                       |
+| `onCompleted`    | Function | A hook called once the timer has completed |
 
-| Name             | Description                                |
-| ---------------- | ------------------------------------------ |
-| `initialSeconds` | Initial (remaining) time in seconds        |
-| `initialFreeze`  | Initial freeze state                       |
-| `onCompleted`    | A hook called once the timer has completed |
+### Properties
+
+The hook returns the following properties:
+
+| Name               | Type     | Description                                                                                                              |
+| ------------------ | -------- | ------------------------------------------------------------------------------------------------------------------------ |
+| `timeRemaining`    | String   | The time remaining as a formatted string, e.g. "01:05"                                                                   |
+| `secondsRemaining` | Number   | The time remaining as seconds                                                                                            |
+| `isFrozen`         | Boolean  | Whether the timer is frozen                                                                                              |
+| `setFreeze`        | Function | A setter for the timer's freeze state                                                                                    |
+| `resetTimer`       | Function | A function to force-reset the timer – takes the `freeze` parameter which dictates whether to start the timer upon reset. |
 
 ## TypeScript Support 
 
