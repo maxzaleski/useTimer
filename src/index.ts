@@ -36,7 +36,8 @@ export interface UseTimerState {
   setFreeze(value: boolean): void;
   /**
    * Force the timer to reset.
-   * @param freeze - Whether the timer should freeze after resetting.
+   * 
+   * @param freeze Whether the timer should freeze after resetting.
    */
   resetTimer(freeze?: boolean): void;
 }
@@ -44,9 +45,9 @@ export interface UseTimerState {
 /**
  * useTimer is a hook that spawns a timer which ticks every second.
  *
- * @param initialSeconds - Initial (remaining) time in seconds.
- * @param initialFreeze - Initial freeze state; if true, the timer will not tick.
- * @param onCompleted - Hook called when timer completes.
+ * @param initialSeconds Initial (remaining) time in seconds.
+ * @param initialFreeze Initial freeze state; if true, the timer will not tick.
+ * @param onCompleted Callback on timer completion. 
  */
 export function useTimer(
   initialSeconds: number,
@@ -65,15 +66,22 @@ export function useTimer(
         const hydrated = secondsRemaining - 1;
         setTimeRemaining(getTimeString(hydrated));
         setSecondsRemaining(hydrated);
-      }, 1000); // 1 second.
+      }, 1000); 
       return () => clearTimeout(timeout);
-      // Countdown has been reached -> reset timer.
     } else if (secondsRemaining === 0 && !freeze) {
+      // Countdown has been reached; reset timer.
       setFreeze(true);
-      // Call `onCompleted` hook if provided.
       if (onCompleted) onCompleted();
     }
   }, [freeze, secondsRemaining]);
+
+  // This implementation circumvents the preferred pattern of calling the setter itself. 
+  // However, the hook might fall short by a single render resulting in an erroneous time string to
+  // be displayed.
+  React.useEffect(() => {
+    setTimeRemaining(getTimeString(initialSeconds));
+    setSecondsRemaining(initialSeconds);
+  }, [initialSeconds])
 
   const resetTimer = React.useCallback(
     (freeze: boolean = false) => {
@@ -88,17 +96,16 @@ export function useTimer(
     timeRemaining,
     secondsRemaining,
     isFrozen: freeze,
+    setSecondsRemaining,
     setFreeze,
     resetTimer,
   } as UseTimerState;
 }
 
 /**
- * calculateTimeRemaining returns a formatted string of the time remaining.
+ * calculateTimeRemaining returns a formatted time string.
  *
- * If the time is less than a minute, it will return the time in seconds.
- *
- * @param secondsRemaining - The number of seconds remaining.
+ * @param secondsRemaining The number of seconds remaining.
  */
 function getTimeString(secondsRemaining: number) {
   if (secondsRemaining == 0) return '00:00';
